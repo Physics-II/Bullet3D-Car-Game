@@ -21,7 +21,7 @@ bool ModulePlayer::Start()
 	VehicleInfo car;
 
 	// Car properties ----------------------------------------
-	car.chassis_size.Set(1.85, 0.8, 2.1);
+	car.chassis_size.Set(1.85, 1.0, 2.1);
 	car.chassis_offset.Set(0, 0.1, 0);
 	car.mass = 100.0f;
 	car.suspensionStiffness = 15.88f;
@@ -35,7 +35,7 @@ bool ModulePlayer::Start()
 	float connection_height = 0.3f;
 	float wheel_radius = 0.3f;
 	float wheel_width = 0.3f;
-	float suspensionRestLength = 0.4f;
+	float suspensionRestLength = 0.7f;
 
 	// Don't change anything below this line ------------------
 
@@ -137,8 +137,8 @@ update_status ModulePlayer::Update(float dt)
 		brake = BRAKE_POWER;
 	}
 
-	vehicle->ApplyEngineForce(acceleration);
-	vehicle->Turn(turn);
+	vehicle->ApplyEngineForce(-(acceleration));
+	vehicle->Turn(-(turn));
 	vehicle->Brake(brake);
 
 	vehicle->Render();

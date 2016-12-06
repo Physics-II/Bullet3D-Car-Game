@@ -33,7 +33,12 @@ bool ModuleSceneIntro::Start()
 	
 	plane1P = App->physics->AddBody(*plane1, 0);
 
-	obs1 = new Cube(5, 0.1, 7);
+	plane2 = new Cube(10.0, 0.1, 14.0);
+	plane2->SetPos(0, 4.47, -30);
+
+	plane2P = App->physics->AddBody(*plane2, 0);
+
+	/*obs1 = new Cube(5, 0.1, 7);
 	obs1->SetPos(3, 5, -27);
 	obs1->SetRotation(20, vec3(1, 0, 0));
 
@@ -48,10 +53,10 @@ bool ModuleSceneIntro::Start()
 	obs3 = new Cube(5, 0.1, 7);
 	obs3->SetPos(-0, 5, -41);
 	
-	obs3P = App->physics->AddBody(*obs3, 0);
+	obs3P = App->physics->AddBody(*obs3, 0);*/
 	
 	rampJump2 = new Cube(7, 0.1, 9);
-	rampJump2->SetPos(3, 5, -51);
+	rampJump2->SetPos(3, 7.5, -51);
 	rampJump2->SetRotation(40, vec3(1, 0, 0));
 
 	rampJump2P = App->physics->AddBody(*rampJump2, 0);
@@ -77,9 +82,9 @@ update_status ModuleSceneIntro::Update(float dt)
 	
 	ramp1->Render();
 	plane1->Render();
-	obs1->Render();
+	/*obs1->Render();
 	obs2->Render();
-	obs3->Render();
+	obs3->Render();*/
 	rampJump2->Render();
 	/*Sphere s(1);
 	s.SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
