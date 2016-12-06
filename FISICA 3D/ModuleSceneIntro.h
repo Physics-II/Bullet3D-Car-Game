@@ -42,6 +42,11 @@ public:
 	PhysMotor3D* left_wheel;
 	PhysMotor3D* right_wheel;
 
-	Cube*c1,*c2;
-	PhysBody3D* cube1, *cube2;
+
+
+	//floor 1
+
+	Cube*ramp1, *plane1, *obs1, *obs2, *obs3, *rampJump2, *corved1, *corved2, *corved3, *minicorved1, *minicorved2, *minicorbed3, *minicorved4;
+	PhysBody3D *ramp1P, *plane1P, *obs1P, *obs2P, *obs3P, *rampJump2P, *corved1P, *corved2P, *corved3P, *minicorved1P, *minicorved2P, *minicorbed3P, *minicorved4P;
+
 };
