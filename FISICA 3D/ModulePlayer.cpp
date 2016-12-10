@@ -43,7 +43,7 @@ bool ModulePlayer::Start()
 	float half_length = car.chassis_size.z*0.5f;
 	
 	vec3 direction(0,-1,0);
-	vec3 axis(-1,0,0);
+	vec3 axis(1,0,0);
 	
 	car.num_wheels = 4;
 	car.wheels = new Wheel[4];
@@ -122,14 +122,14 @@ update_status ModulePlayer::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
-		if(turn < TURN_DEGREES)
-			turn +=  TURN_DEGREES;
+		if(turn > -TURN_DEGREES)
+			turn -=  TURN_DEGREES;
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
-		if(turn > -TURN_DEGREES)
-			turn -= TURN_DEGREES;
+		if(turn < TURN_DEGREES)
+			turn += TURN_DEGREES;
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
