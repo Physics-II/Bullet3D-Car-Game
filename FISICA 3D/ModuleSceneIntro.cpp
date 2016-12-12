@@ -36,31 +36,31 @@ bool ModuleSceneIntro::Start()
 	ramp1->color = Green;
 	ramp1p = App->physics->AddBody(*ramp1, 0);
 
-	gcube = new Cube(8, 9, 8);
+	gcube = new Cube(8, 6, 20);
 	gcube->SetPos(0, 3.2, 78);
 	gcubep = App->physics->AddBody(*gcube, 0);
 
-	gplane = new Cube(15, 0, 6);
-	gplane->SetPos(0, 0.5, 108);
+	gplane = new Cube(20, 0, 8);
+	gplane->SetPos(0, 0.5, 108.5);
 	gplanep = App->physics->AddBody(*gplane, 0);
 
-	ramp2 = new Cube(15, 0, 10);
-	ramp2->SetPos(0, 0.5, 112.5);
-	ramp2->SetRotation(30, vec3(-1, 0, 0));
+	ramp2 = new Cube(30, 0, 10);
+	ramp2->SetPos(5, 0.5, 112.5);
+	ramp2->SetRotation(20, vec3(-1, 0, 0));
 	ramp2p = App->physics->AddBody(*ramp2, 0);
 
-	ramp3 = new Cube(15, 0, 4);
-	ramp3->SetPos(15, 2, 115);
+	/*ramp3 = new Cube(10, 0, 8);
+	ramp3->SetPos(15, 0.8, 113);
 	ramp3->SetRotation(30, vec3(-1, 0, 0));
-	ramp2p = App->physics->AddBody(*ramp3, 0);
+	ramp2p = App->physics->AddBody(*ramp3, 0);*/
 
-	ramp4 = new Cube(15, 0, 3);
-	ramp4->SetPos(25, 4, 115);
-	ramp4->SetRotation(35, vec3(0, 0, 1));
-	ramp4p = App->physics->AddBody(*ramp4, 0);
+	/*ramp4 = new Cube(15, 0, 3);
+	ramp4->SetPos(25, 4, 114);
+	ramp4->SetRotation(25, vec3(0, 0, 1));
+	ramp4p = App->physics->AddBody(*ramp4, 0);*/
 
-	plane2 = new Cube(8,10,10);
-	plane2->SetPos(35, 2.8, 115);
+	plane2 = new Cube(12,2,6);
+	plane2->SetPos(28, 1, 110);
 	plane2p = App->physics->AddBody(*plane2, 0);
 
 	return ret;
@@ -88,8 +88,8 @@ update_status ModuleSceneIntro::Update(float dt)
 	ramp1->Render();
 	gplane->Render();
 	ramp2->Render();
-	ramp3->Render();
-	ramp4->Render();
+	/*ramp3->Render();*/
+	/*ramp4->Render();*/
 
 	plane2->Render();
 	return UPDATE_CONTINUE;
