@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include "glmath.h"
 
+struct PhysVehicle3D;
 class ModuleCamera3D : public Module
 {
 public:
@@ -18,7 +19,7 @@ public:
 	void Move(const vec3 &Movement);
 	float* GetViewMatrix();
 
-private:
+
 
 	void CalculateViewMatrix();
 
@@ -27,6 +28,7 @@ public:
 	vec3 X, Y, Z, Position, Reference;
 
 private:
-
+	PhysVehicle3D* pvehicle;
 	mat4x4 ViewMatrix, ViewMatrixInverse;
+	vec3 PositionCamera, Direction, PositionVehicle;
 };

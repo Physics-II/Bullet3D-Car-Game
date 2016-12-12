@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "PhysBody3D.h"
 #include "ModuleCamera3D.h"
+#include "PhysVehicle3D.h"
 
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -13,6 +14,10 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(ap
 
 	Position = vec3(0.0f, 0.0f, 5.0f);
 	Reference = vec3(0.0f, 0.0f, 0.0f);
+	
+	PositionCamera = vec3(0.0f, 0.0f, 0.0f);
+	Direction = vec3(0.0f, 0.0f, 0.0f);
+	pvehicle = nullptr;
 }
 
 ModuleCamera3D::~ModuleCamera3D()
@@ -24,6 +29,9 @@ bool ModuleCamera3D::Start()
 	LOG("Setting up the camera");
 	bool ret = true;
 
+	PositionCamera = vec3(0.0f, 4.0f, -16.0f);
+	Direction = vec3(0.0f, 0.0f, 2.0f);
+	pvehicle = App->player->vehicle;
 	return ret;
 }
 
@@ -92,8 +100,20 @@ update_status ModuleCamera3D::Update(float dt)
 				Y = cross(Z, X);
 			}
 		}
-
+		
 		Position = Reference + Z * length(Position);
+	}
+	else
+	{
+		mat4x4 transformationVehicle;
+		pvehicle->GetTransform(&transformationVehicle);
+
+		X = vec3(transformationVehicle[0], transformationVehicle[1], transformationVehicle[2]);
+		Y = vec3(transformationVehicle[4], transformationVehicle[5], transformationVehicle[6]);
+		Z = vec3(transformationVehicle[8], transformationVehicle[9], transformationVehicle[10]);
+
+		PositionVehicle = transformationVehicle.translation();
+		App->camera->Look((PositionVehicle + PositionCamera) + Z * 8,Direction + PositionVehicle, true);
 	}
 
 	// Recalculate matrix -------------
