@@ -46,7 +46,7 @@ public:
 
 	//floor 1
 
-	Cube *exit, *firstpl, *gcube, *gplane, *ramp1, *ramp2, *ramp3, *ramp4, *plane2;
-	PhysBody3D *exitp,*firstplp, *gcubep, *gplanep, *ramp1p,*ramp2p, *ramp3p, *ramp4p, *plane2p;
+	Cube *exit, *firstpl, *gcube, *gplane, *ramp1, *ramp2, *ramp3, *ramp4, *plane2, *plane3, *plane4;
+	PhysBody3D *exitp,*firstplp, *gcubep, *gplanep, *ramp1p,*ramp2p, *ramp3p, *ramp4p, *plane2p, *plane3p, *plane4p;
 
 };
