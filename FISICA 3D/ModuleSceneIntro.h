@@ -4,8 +4,6 @@
 #include "Globals.h"
 #include "Primitive.h"
 
-#define MAX_SNAKE 2
-
 struct PhysBody3D;
 struct PhysMotor3D;
 
@@ -22,13 +20,6 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
 public:
-	/*
-	PhysBody3D* pb_snake[MAX_SNAKE];
-	Sphere s_snake[MAX_SNAKE];
-
-	PhysBody3D* pb_snake2[MAX_SNAKE];
-	Sphere s_snake2[MAX_SNAKE];
-	*/
 
 	PhysBody3D* pb_chassis;
 	Cube p_chassis;
@@ -43,10 +34,10 @@ public:
 	PhysMotor3D* right_wheel;
 
 
+	//map
+	Cube *exit, *firstpl, *gcube, *gplane, *ramp1, *ramp2, *ramp3, *ramp4, *plane2, *plane3, *plane4, *plane5;
+	PhysBody3D *exitp,*firstplp, *gcubep, *gplanep, *ramp1p,*ramp2p, *ramp3p, *ramp4p, *plane2p, *plane3p, *plane4p, *plane5p;
 
-	//floor 1
-
-	Cube *exit, *firstpl, *gcube, *gplane, *ramp1, *ramp2, *ramp3, *ramp4, *plane2, *plane3, *plane4;
-	PhysBody3D *exitp,*firstplp, *gcubep, *gplanep, *ramp1p,*ramp2p, *ramp3p, *ramp4p, *plane2p, *plane3p, *plane4p;
+	PhysBody3D *ground_plane;
 
 };

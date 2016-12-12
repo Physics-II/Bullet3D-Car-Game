@@ -54,24 +54,23 @@ bool ModuleSceneIntro::Start()
 	ramp3->SetRotation(3, vec3(0, 0, -1));
 	ramp2p = App->physics->AddBody(*ramp3, 0);
 
-	/*ramp4 = new Cube(15, 0, 3);
-	ramp4->SetPos(25, 4, 114);
-	ramp4->SetRotation(25, vec3(0, 0, 1));
-	ramp4p = App->physics->AddBody(*ramp4, 0);*/
-
 	plane2 = new Cube(12,0.6,6);
 	plane2->SetPos(28, 0.3, 110);
 	plane2p = App->physics->AddBody(*plane2, 0);
 
 	plane3 = new Cube(6, 0.6, 6);
 	plane3->SetPos(35, 0.3, 110);
-	plane3->SetRotation(20, vec3(0, 1, 0));
+	plane3->SetRotation(15, vec3(0, 1, 0));
 	plane3p = App->physics->AddBody(*plane3, 0);
 
 	plane4 = new Cube(6, 0.6, 6);
 	plane4->SetPos(40, 0.3, 108);
-	plane4->SetRotation(40, vec3(0, 1, 0));
+	plane4->SetRotation(30, vec3(0, 1, 0));
 	plane4p = App->physics->AddBody(*plane4, 0);
+
+	plane5 = new Cube(6, 0.6, 6);
+	plane5->SetPos(44, 0.3, 107);
+	plane5p = App->physics->AddBody(*plane5, 0);
 
 
 	return ret;
@@ -88,9 +87,10 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
+
 	Plane p(0, 1, 0, 0);
 	p.axis = true;
-	p.color = Blue;
+	p.color = Color(0.0f, 0.5f, 1.0f);
 	p.Render();
 	
 	exit->Render();
@@ -100,10 +100,10 @@ update_status ModuleSceneIntro::Update(float dt)
 	gplane->Render();
 	ramp2->Render();
 	ramp3->Render();
-	/*ramp4->Render();*/
 	plane2->Render();
 	plane3->Render();
 	plane4->Render();
+	plane5->Render();
 
 	return UPDATE_CONTINUE;
 }
