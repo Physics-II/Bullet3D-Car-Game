@@ -103,7 +103,7 @@ update_status ModuleCamera3D::Update(float dt)
 		
 		Position = Reference + Z * length(Position);
 	}
-	else
+	/*else
 	{
 		mat4x4 transformationVehicle;
 		pvehicle->GetTransform(&transformationVehicle);
@@ -114,7 +114,7 @@ update_status ModuleCamera3D::Update(float dt)
 
 		PositionVehicle = transformationVehicle.translation();
 		App->camera->Look((PositionVehicle + PositionCamera) + Z * 8,Direction + PositionVehicle, true);
-	}
+	}*/
 
 	// Recalculate matrix -------------
 	CalculateViewMatrix();
