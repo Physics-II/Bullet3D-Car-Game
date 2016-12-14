@@ -156,6 +156,98 @@ bool ModuleSceneIntro::Start()
 	i_wall17->SetPos(-50, 5, 0);
 	i_wall17b = App->physics->AddBody(*i_wall17, 0);
 
+	i_wall18 = new Cube(10, 10, 30);
+	i_wall18->SetPos(20, 5, 10);
+	i_wall18b = App->physics->AddBody(*i_wall18, 0);
+
+	i_wall19 = new Cube(50, 10, 10);
+	i_wall19->SetPos(40, 5, 20);
+	i_wall19b = App->physics->AddBody(*i_wall19, 0);
+
+	i_wall20 = new Cube(70, 10, 10);
+	i_wall20->SetPos(-30, 5, 20);
+	i_wall20b = App->physics->AddBody(*i_wall20, 0);
+
+	i_wall21 = new Cube(10, 10, 50);
+	i_wall21->SetPos(-60, 5, 40);
+	i_wall21b = App->physics->AddBody(*i_wall21, 0);
+
+	i_wall22 = new Cube(10, 10, 30);
+	i_wall22->SetPos(0, 5, 30);
+	i_wall22b = App->physics->AddBody(*i_wall22, 0);
+
+	i_wall23 = new Cube(90, 10, 10);
+	i_wall23->SetPos(40, 5, 40);
+	i_wall23b = App->physics->AddBody(*i_wall23, 0);
+
+	i_wall24 = new Cube(10, 10, 50);
+	i_wall24->SetPos(-30, 5, 60);
+	i_wall24b = App->physics->AddBody(*i_wall24, 0);
+
+	i_wall25 = new Cube(100, 10, 10);
+	i_wall25->SetPos(15, 5, 60);
+	i_wall25b = App->physics->AddBody(*i_wall25, 0);
+
+	i_wall26 = new Cube(40, 10, 10);
+	i_wall26->SetPos(-45, 5, 80);
+	i_wall26b = App->physics->AddBody(*i_wall26, 0);
+
+	i_wall27 = new Cube(10, 10, 70);
+	i_wall27->SetPos(-60, 5, 110);
+	i_wall27b = App->physics->AddBody(*i_wall27, 0);
+
+	i_wall28 = new Cube(30, 10, 10);
+	i_wall28->SetPos(-50, 5, 140);
+	i_wall28b = App->physics->AddBody(*i_wall28, 0);
+
+	i_wall29 = new Cube(10, 10, 50);
+	i_wall29->SetPos(60, 5, 80);
+	i_wall29b = App->physics->AddBody(*i_wall29, 0);
+
+	i_wall30 = new Cube(60, 10, 10);
+	i_wall30->SetPos(15, 5, 80);
+	i_wall30b = App->physics->AddBody(*i_wall30, 0);
+
+	i_wall31 = new Cube(110, 10, 10);
+	i_wall31->SetPos(10, 5, 100);
+	i_wall31b = App->physics->AddBody(*i_wall31, 0);
+
+	i_wall32 = new Cube(10, 10, 90);
+	i_wall32->SetPos(-10, 5, 120);
+	i_wall32b = App->physics->AddBody(*i_wall32, 0);
+
+	i_wall33 = new Cube(40, 10, 10);
+	i_wall33->SetPos(-25, 5, 120);
+	i_wall33b = App->physics->AddBody(*i_wall33, 0);
+
+	i_wall34 = new Cube(70, 10, 10);
+	i_wall34->SetPos(-40, 5, 160);
+	i_wall34b = App->physics->AddBody(*i_wall34, 0);
+
+	i_wall35 = new Cube(70, 10, 10);
+	i_wall35->SetPos(40, 5, 160);
+	i_wall35b = App->physics->AddBody(*i_wall35, 0);
+
+	i_wall36 = new Cube(10, 10, 50);
+	i_wall36->SetPos(10, 5, 140);
+	i_wall36b = App->physics->AddBody(*i_wall36, 0);
+
+	i_wall37 = new Cube(50, 10, 10);
+	i_wall37->SetPos(30, 5, 100);
+	i_wall37b = App->physics->AddBody(*i_wall37, 0);
+
+	i_wall38 = new Cube(10, 10, 30);
+	i_wall38->SetPos(50, 5, 130);
+	i_wall38b = App->physics->AddBody(*i_wall38, 0);
+
+	i_wall39 = new Cube(30, 10, 10);
+	i_wall39->SetPos(40, 5, 140);
+	i_wall39b = App->physics->AddBody(*i_wall39, 0);
+
+	i_wall40 = new Cube(50, 10, 10);
+	i_wall40->SetPos(30, 5, 120);
+	i_wall40b = App->physics->AddBody(*i_wall40, 0);
+
 	return ret;
 }
 
@@ -210,6 +302,29 @@ update_status ModuleSceneIntro::Update(float dt)
 	i_wall15->Render();
 	i_wall16->Render();
 	i_wall17->Render();
+	i_wall18->Render();
+	i_wall19->Render();
+	i_wall20->Render();
+	i_wall21->Render();
+	i_wall22->Render();
+	i_wall23->Render();
+	i_wall24->Render();
+	i_wall25->Render();
+	i_wall26->Render();
+	i_wall27->Render();
+	i_wall28->Render();
+	i_wall29->Render();
+	i_wall30->Render();
+	i_wall31->Render();
+	i_wall32->Render();
+	i_wall33->Render();
+	i_wall34->Render();
+	i_wall35->Render();
+	i_wall36->Render();
+	i_wall37->Render();
+	i_wall38->Render();
+	i_wall39->Render();
+	i_wall40->Render();
 
 	return UPDATE_CONTINUE;
 }
