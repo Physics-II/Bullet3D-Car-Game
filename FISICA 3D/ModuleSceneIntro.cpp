@@ -75,6 +75,7 @@ bool ModuleSceneIntro::Start()
 	wall1 = new Cube(70, 10, 10);
 	wall1->SetPos(40, 5, -100);
 	wall1b = App->physics->AddBody(*wall1, 0);
+	
 
 	wall2 = new Cube(70, 10, 10);
 	wall2->SetPos(-40, 5, -100);
@@ -248,6 +249,13 @@ bool ModuleSceneIntro::Start()
 	i_wall40->SetPos(30, 5, 120);
 	i_wall40b = App->physics->AddBody(*i_wall40, 0);
 
+	s.size = vec3(5, 3, 1);
+	s.SetPos(0, 0, -110);
+
+	sensor = App->physics->AddBody(s, 0.0f);
+	sensor->SetAsSensor(true);
+	sensor->collision_listeners.add(this);
+
 	return ret;
 }
 
@@ -267,6 +275,9 @@ update_status ModuleSceneIntro::Update(float dt)
 	p.axis = true;
 	p.color = Color(0.0f, 0.5f, 1.0f);
 	p.Render();
+
+	sensor->GetTransform(&s.transform);
+	s.Render();
 	
 	/*exit->Render();
 	firstpl->Render();
@@ -331,5 +342,6 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
+	LOG("Hit!");
 }
 

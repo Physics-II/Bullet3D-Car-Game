@@ -31,4 +31,9 @@ private:
 	PhysVehicle3D* pvehicle;
 	mat4x4 ViewMatrix, ViewMatrixInverse;
 	vec3 PositionCamera, Direction, PositionVehicle;
+
+	PhysBody3D* following;
+	float min_following_dist;
+	float max_following_dist;
+	float following_height;
 };
