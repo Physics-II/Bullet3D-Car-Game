@@ -205,10 +205,27 @@ bool ModuleSceneIntro::Start()
 	b1b = App->physics->AddBody(*b1, 0);
 
 	s = new Cube(10, 10, 10);
-	s->SetPos(0, 0, -90);
+	s->SetPos(40, 0, 130);
 	sensor = App->physics->AddBody(*s, 0.0f);
 	sensor->SetAsSensor(true);
 	sensor->collision_listeners.add(this);
+
+	s2 = new Cube(10, 10, 10);
+	s2->SetPos(0, 0, 90);
+	sensor2 = App->physics->AddBody(*s2, 0.0f);
+	sensor2->SetAsSensor(true);
+	sensor2->collision_listeners.add(this);
+
+	s3 = new Cube(10, 10, 10);
+	s3->SetPos(0, 0, -70);
+	sensor3 = App->physics->AddBody(*s3, 0.0f);
+	sensor3->SetAsSensor(true);
+	sensor3->collision_listeners.add(this);
+
+	sen1 = false;
+	sen2 = false;
+	sen3 = false;
+	win = false;
 
 	return ret;
 }

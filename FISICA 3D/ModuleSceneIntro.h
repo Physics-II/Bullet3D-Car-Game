@@ -40,9 +40,12 @@ public:
 	bool first;
 
 	//Sensors
-	Cube *s;
-	PhysBody3D *sensor;
+	Cube *s, *s2,*s3;
+	PhysBody3D *sensor, *sensor2, *sensor3;
 
 	// FX and music
 	uint lose;
+
+	//conditions
+	bool sen1, sen2, sen3, win;
 };
