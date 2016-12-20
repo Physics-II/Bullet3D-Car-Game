@@ -142,17 +142,41 @@ update_status ModulePlayer::Update(float dt)
 		brake = BRAKE_POWER;
 	}
 
+
+	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
+	{
+		Restart();
+	}
+
 	vehicle->ApplyEngineForce(-(acceleration));
 	vehicle->Turn(-(turn));
 	vehicle->Brake(brake);
 
 	vehicle->Render();
 
-	char title[80];
+	/*char title[80];
 	sprintf_s(title, "%.1f Km/h", vehicle->GetKmh());
-	App->window->SetTitle(title);
+	App->window->SetTitle(title);*/
 
 	return UPDATE_CONTINUE;
+}
+
+void ModulePlayer::Restart()
+{
+	--lives;
+	if (lives > 0)
+	{
+		App->player->vehicle->Brake(BRAKE_POWER);
+		App->player->vehicle->SetPos(0, 0, -100);
+	}
+
+	else
+	{
+		char title[80];
+		sprintf_s(title, "GAME OVER. Score: %u, Max Score: %u", App->player->score, App->player->max_score);
+		App->window->SetTitle(title);
+		App->audio->PlayFx(App->scene_intro->lose);
+	}
 }
 
 

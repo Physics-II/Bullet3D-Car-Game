@@ -45,7 +45,16 @@ public:
 	Cube *i_wall22, *i_wall23, *i_wall24, *i_wall25, *i_wall26, *i_wall27, *i_wall28, *i_wall29, *i_wall30, *i_wall31, *i_wall32, *i_wall33, *i_wall34, *i_wall35, *i_wall36, *i_wall37, *i_wall38, *i_wall39, *i_wall40;
 	PhysBody3D *i_wall22b, *i_wall23b, *i_wall24b, *i_wall25b, *i_wall26b, *i_wall27b, *i_wall28b, *i_wall29b, *i_wall30b, *i_wall31b, *i_wall32b, *i_wall33b, *i_wall34b, *i_wall35b, *i_wall36b, *i_wall37b, *i_wall38b, *i_wall39b, *i_wall40b;
 
+	// Buttons
+	Cube *b1;
+	PhysBody3D *b1b;
+
+	bool first;
+
 	//Sensors
-	Cube s;
-	PhysBody3D* sensor;
+	Cube *s;
+	PhysBody3D *sensor;
+
+	// FX and music
+	uint lose;
 };

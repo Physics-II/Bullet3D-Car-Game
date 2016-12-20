@@ -19,10 +19,16 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
+	void Restart();
+
 public:
 
 	PhysVehicle3D* vehicle;
 	float turn;
 	float acceleration;
 	float brake;
+
+	uint lives = 5;
+	uint score = 0;
+	uint max_score = 0;
 };

@@ -17,60 +17,10 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
+	lose = App->audio->LoadFx("Game/Music/Lose.wav");
+
 	App->camera->Move(vec3(8.0f, 8.0f, 40.0f));
 	App->camera->LookAt(vec3(0, 0, 60));
-
-	/*exit = new Cube(10, 0, 10);
-	exit->SetPos(0, 0, 10);
-	exit->color = Green;
-	exitp = App->physics->AddBody(*exit, 0);
-	
-	firstpl = new Cube(8,0,40);
-	firstpl->SetPos(0, 0, 35);
-	firstpl->color = Green;
-	firstplp = App->physics->AddBody(*firstpl, 0);
-
-	ramp1 = new Cube(8, 0, 4);
-	ramp1->SetPos(0,1,55);
-	ramp1->SetRotation(30, vec3(-1, 0, 0));
-	ramp1->color = Green;
-	ramp1p = App->physics->AddBody(*ramp1, 0);
-
-	gcube = new Cube(8, 6, 20);
-	gcube->SetPos(0, 3.2, 78);
-	gcubep = App->physics->AddBody(*gcube, 0);
-
-	gplane = new Cube(20, 0, 9);
-	gplane->SetPos(0, 1.3, 110);
-	gplanep = App->physics->AddBody(*gplane, 0);
-
-	ramp2 = new Cube(30, 0, 10);
-	ramp2->SetPos(5, 0.5, 112.5);
-	ramp2->SetRotation(20, vec3(-1, 0, 0));
-	ramp2p = App->physics->AddBody(*ramp2, 0);
-
-	ramp3 = new Cube(15, 0, 4);
-	ramp3->SetPos(17, 0.8, 110);
-	ramp3->SetRotation(3, vec3(0, 0, -1));
-	ramp2p = App->physics->AddBody(*ramp3, 0);
-
-	plane2 = new Cube(12,0.6,6);
-	plane2->SetPos(28, 0.3, 110);
-	plane2p = App->physics->AddBody(*plane2, 0);
-
-	plane3 = new Cube(6, 0.6, 6);
-	plane3->SetPos(35, 0.3, 110);
-	plane3->SetRotation(15, vec3(0, 1, 0));
-	plane3p = App->physics->AddBody(*plane3, 0);
-
-	plane4 = new Cube(6, 0.6, 6);
-	plane4->SetPos(40, 0.3, 108);
-	plane4->SetRotation(30, vec3(0, 1, 0));
-	plane4p = App->physics->AddBody(*plane4, 0);
-
-	plane5 = new Cube(6, 0.6, 6);
-	plane5->SetPos(44, 0.3, 107);
-	plane5p = App->physics->AddBody(*plane5, 0);*/
 
 	wall1 = new Cube(70, 10, 10);
 	wall1->SetPos(40, 5, -100);
@@ -249,10 +199,14 @@ bool ModuleSceneIntro::Start()
 	i_wall40->SetPos(30, 5, 120);
 	i_wall40b = App->physics->AddBody(*i_wall40, 0);
 
-	s.size = vec3(5, 3, 1);
-	s.SetPos(0, 0, -110);
-
-	sensor = App->physics->AddBody(s, 0.0f);
+	b1 = new Cube(10, 0, 10);
+	b1->SetPos(0, 0, -90);
+	b1->color = Green;
+	b1b = App->physics->AddBody(*b1, 0);
+	
+	s = new Cube(10, 10, 10);
+	s->SetPos(0, 0, -90);
+	sensor = App->physics->AddBody(*s, 0.0f);
 	sensor->SetAsSensor(true);
 	sensor->collision_listeners.add(this);
 
@@ -275,21 +229,6 @@ update_status ModuleSceneIntro::Update(float dt)
 	p.axis = true;
 	p.color = Color(0.0f, 0.5f, 1.0f);
 	p.Render();
-
-	sensor->GetTransform(&s.transform);
-	s.Render();
-	
-	/*exit->Render();
-	firstpl->Render();
-	gcube->Render();
-	ramp1->Render();
-	gplane->Render();
-	ramp2->Render();
-	ramp3->Render();
-	plane2->Render();
-	plane3->Render();
-	plane4->Render();
-	plane5->Render();*/
 
 	wall1->Render();
 	wall2->Render();
@@ -337,11 +276,21 @@ update_status ModuleSceneIntro::Update(float dt)
 	i_wall39->Render();
 	i_wall40->Render();
 
+	b1->Render();
+
 	return UPDATE_CONTINUE;
 }
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
+	if (body1 == (PhysBody3D*)App->player->vehicle || body1 == sensor)
+	{
+		if (body2 == sensor ||body2 == (PhysBody3D*)App->player->vehicle)
+		{
+			b1->color = Red;
+			first == true;
+		}
+	}
 	LOG("Hit!");
 }
 
