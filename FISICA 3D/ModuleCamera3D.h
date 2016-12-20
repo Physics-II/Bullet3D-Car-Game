@@ -20,7 +20,7 @@ public:
 	float* GetViewMatrix();
 	void Follow(PhysBody3D* body, float min, float max, float height);
 	void UnFollow();
-
+private:
 
 	void CalculateViewMatrix();
 
@@ -29,6 +29,7 @@ public:
 	vec3 X, Y, Z, Position, Reference;
 
 private:
+
 	PhysVehicle3D* pvehicle;
 	mat4x4 ViewMatrix, ViewMatrixInverse;
 	vec3 PositionCamera, Direction, PositionVehicle;

@@ -25,7 +25,7 @@ bool ModuleSceneIntro::Start()
 	wall1 = new Cube(70, 10, 10);
 	wall1->SetPos(40, 5, -100);
 	wall1b = App->physics->AddBody(*wall1, 0);
-	
+
 
 	wall2 = new Cube(70, 10, 10);
 	wall2->SetPos(-40, 5, -100);
@@ -203,7 +203,7 @@ bool ModuleSceneIntro::Start()
 	b1->SetPos(0, 0, -90);
 	b1->color = Green;
 	b1b = App->physics->AddBody(*b1, 0);
-	
+
 	s = new Cube(10, 10, 10);
 	s->SetPos(0, 0, -90);
 	sensor = App->physics->AddBody(*s, 0.0f);
@@ -224,7 +224,6 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-
 	Plane p(1000, 1000, 0, 0);
 	p.axis = true;
 	p.color = Color(0.0f, 0.5f, 1.0f);
@@ -283,14 +282,6 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	if (body1 == (PhysBody3D*)App->player->vehicle || body1 == sensor)
-	{
-		if (body2 == sensor ||body2 == (PhysBody3D*)App->player->vehicle)
-		{
-			b1->color = Red;
-			first == true;
-		}
-	}
 	LOG("Hit!");
 }
 

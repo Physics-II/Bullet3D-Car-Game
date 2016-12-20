@@ -4,6 +4,8 @@
 #include "Globals.h"
 #include "Primitive.h"
 
+#define MAX_SNAKE 2
+
 struct PhysBody3D;
 struct PhysMotor3D;
 
@@ -20,20 +22,6 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
 public:
-
-	PhysBody3D* pb_chassis;
-	Cube p_chassis;
-
-	PhysBody3D* pb_wheel;
-	Cylinder p_wheel;
-
-	PhysBody3D* pb_wheel2;
-	Cylinder p_wheel2;
-
-	PhysMotor3D* left_wheel;
-	PhysMotor3D* right_wheel;
-
-
 	// map exterior walls
 	Cube *wall1, *wall2, *wall3, *wall4, *wall5, *wall6;
 	PhysBody3D *wall1b, *wall2b, *wall3b, *wall4b, *wall5b, *wall6b;

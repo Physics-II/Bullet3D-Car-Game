@@ -2,7 +2,6 @@
 #include "Application.h"
 #include "PhysBody3D.h"
 #include "ModuleCamera3D.h"
-#include "PhysVehicle3D.h"
 
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -14,10 +13,6 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(ap
 
 	Position = vec3(0.0f, 0.0f, 5.0f);
 	Reference = vec3(0.0f, 0.0f, 0.0f);
-	
-	PositionCamera = vec3(0.0f, 0.0f, 0.0f);
-	Direction = vec3(0.0f, 0.0f, 0.0f);
-	pvehicle = nullptr;
 }
 
 ModuleCamera3D::~ModuleCamera3D()
@@ -29,9 +24,6 @@ bool ModuleCamera3D::Start()
 	LOG("Setting up the camera");
 	bool ret = true;
 
-	PositionCamera = vec3(0.0f, 4.0f, -16.0f);
-	Direction = vec3(0.0f, 0.0f, 2.0f);
-	pvehicle = App->player->vehicle;
 	return ret;
 }
 
@@ -49,102 +41,31 @@ update_status ModuleCamera3D::Update(float dt)
 	// Implement a debug camera with keys and mouse
 	// Now we can make this movememnt frame rate independant!
 
-	vec3 newPos(0,0,0);
-	float speed = 40.0f * dt;
-	if(App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-		speed = 80.0f * dt;
-
-	if(App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
-	if(App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed;
-
-	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
-
-
-	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
-	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
-	
-	Position += newPos;
-	Reference += newPos;
-
-	// Mouse motion ----------------
-
-	if(App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	if (following != NULL)
 	{
-		int dx = -App->input->GetMouseXMotion();
-		int dy = -App->input->GetMouseYMotion();
+		mat4x4 m;
+		following->GetTransform(&m);
 
-		float Sensitivity = 0.25f;
+		Look(Position, m.translation(), true);
 
-		Position -= Reference;
-
-		if(dx != 0)
+		// Correct height
+		//Position.y = (15.0*Position.y + Position.y + following_height) / 16.0;
+		Position.y = 20;
+		// Correct distance
+		vec3 cam_to_target = m.translation() - Position;
+		float dist = length(cam_to_target);
+		float correctionFactor = 0.f;
+		if (dist < min_following_dist)
 		{
-			float DeltaX = (float)dx * Sensitivity;
-
-			X = rotate(X, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-			Y = rotate(Y, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-			Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+			correctionFactor = 0.15*(min_following_dist - dist) / dist;
 		}
-
-		if(dy != 0)
+		if (dist > max_following_dist)
 		{
-			float DeltaY = (float)dy * Sensitivity;
-
-			Y = rotate(Y, DeltaY, X);
-			Z = rotate(Z, DeltaY, X);
-
-			if(Y.y < 0.0f)
-			{
-				Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
-				Y = cross(Z, X);
-			}
+			correctionFactor = 0.15*(max_following_dist - dist) / dist;
 		}
-		
-		Position = Reference + Z * length(Position);
+		Position -= correctionFactor * cam_to_target;
 	}
 
-	else
-	{
-		/*
-		mat4x4 transformationVehicle;
-		pvehicle->GetTransform(&transformationVehicle);
-
-		X = vec3(transformationVehicle[0], transformationVehicle[1], transformationVehicle[2]);
-		Y = vec3(transformationVehicle[4], transformationVehicle[5], transformationVehicle[6]);
-		Z = vec3(transformationVehicle[8], transformationVehicle[9], transformationVehicle[10]);
-
-		PositionVehicle = transformationVehicle.translation();
-		App->camera->Look((PositionVehicle + PositionCamera) + Y * 8,Direction + PositionVehicle, true);
-		*/
-
-
-		if (following != NULL)
-		{
-			mat4x4 m;
-			following->GetTransform(&m);
-
-			Look(Position, m.translation(), true);
-
-			// Correct height
-			//Position.y = (15.0*Position.y + Position.y + following_height) / 16.0;
-			Position.y = 20;
-			// Correct distance
-			vec3 cam_to_target = m.translation() - Position;
-			float dist = length(cam_to_target);
-			float correctionFactor = 0.f;
-			if (dist < min_following_dist)
-			{
-				correctionFactor = 0.15*(min_following_dist - dist) / dist;
-			}
-			if (dist > max_following_dist)
-			{
-				correctionFactor = 0.15*(max_following_dist - dist) / dist;
-			}
-			Position -= correctionFactor * cam_to_target;
-		}
-
-	}
 
 	// Recalculate matrix -------------
 	CalculateViewMatrix();
@@ -205,7 +126,6 @@ void ModuleCamera3D::CalculateViewMatrix()
 	ViewMatrix = mat4x4(X.x, Y.x, Z.x, 0.0f, X.y, Y.y, Z.y, 0.0f, X.z, Y.z, Z.z, 0.0f, -dot(X, Position), -dot(Y, Position), -dot(Z, Position), 1.0f);
 	ViewMatrixInverse = inverse(ViewMatrix);
 }
-
 
 void ModuleCamera3D::Follow(PhysBody3D* body, float min, float max, float height)
 {
