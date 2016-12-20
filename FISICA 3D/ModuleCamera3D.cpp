@@ -104,8 +104,9 @@ update_status ModuleCamera3D::Update(float dt)
 		Position = Reference + Z * length(Position);
 	}
 
-	/*else
+	else
 	{
+		/*
 		mat4x4 transformationVehicle;
 		pvehicle->GetTransform(&transformationVehicle);
 
@@ -114,8 +115,36 @@ update_status ModuleCamera3D::Update(float dt)
 		Z = vec3(transformationVehicle[8], transformationVehicle[9], transformationVehicle[10]);
 
 		PositionVehicle = transformationVehicle.translation();
-		App->camera->Look((PositionVehicle + PositionCamera) + Z * 8,Direction + PositionVehicle, true);
-	}*/
+		App->camera->Look((PositionVehicle + PositionCamera) + Y * 8,Direction + PositionVehicle, true);
+		*/
+
+
+		if (following != NULL)
+		{
+			mat4x4 m;
+			following->GetTransform(&m);
+
+			Look(Position, m.translation(), true);
+
+			// Correct height
+			//Position.y = (15.0*Position.y + Position.y + following_height) / 16.0;
+			Position.y = 20;
+			// Correct distance
+			vec3 cam_to_target = m.translation() - Position;
+			float dist = length(cam_to_target);
+			float correctionFactor = 0.f;
+			if (dist < min_following_dist)
+			{
+				correctionFactor = 0.15*(min_following_dist - dist) / dist;
+			}
+			if (dist > max_following_dist)
+			{
+				correctionFactor = 0.15*(max_following_dist - dist) / dist;
+			}
+			Position -= correctionFactor * cam_to_target;
+		}
+
+	}
 
 	// Recalculate matrix -------------
 	CalculateViewMatrix();
@@ -175,4 +204,19 @@ void ModuleCamera3D::CalculateViewMatrix()
 {
 	ViewMatrix = mat4x4(X.x, Y.x, Z.x, 0.0f, X.y, Y.y, Z.y, 0.0f, X.z, Y.z, Z.z, 0.0f, -dot(X, Position), -dot(Y, Position), -dot(Z, Position), 1.0f);
 	ViewMatrixInverse = inverse(ViewMatrix);
+}
+
+
+void ModuleCamera3D::Follow(PhysBody3D* body, float min, float max, float height)
+{
+	min_following_dist = min;
+	max_following_dist = max;
+	following_height = height;
+	following = body;
+}
+
+// -----------------------------------------------------------------
+void ModuleCamera3D::UnFollow()
+{
+	following = NULL;
 }

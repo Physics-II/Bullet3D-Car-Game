@@ -18,7 +18,8 @@ public:
 	void LookAt(const vec3 &Spot);
 	void Move(const vec3 &Movement);
 	float* GetViewMatrix();
-
+	void Follow(PhysBody3D* body, float min, float max, float height);
+	void UnFollow();
 
 
 	void CalculateViewMatrix();
