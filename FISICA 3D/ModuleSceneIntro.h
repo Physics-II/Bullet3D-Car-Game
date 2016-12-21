@@ -45,4 +45,5 @@ public:
 
 	// FX and music
 	uint lose;
+	uint music;
 };

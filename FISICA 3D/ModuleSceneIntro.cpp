@@ -19,6 +19,9 @@ bool ModuleSceneIntro::Start()
 
 	lose = App->audio->LoadFx("Game/Music/Lose.wav");
 
+	music = App->audio->LoadFx("Game/Music/Heavy.ogg");
+	App->audio->PlayMusic("Game/Music/Heavy.ogg");
+
 	App->camera->Move(vec3(8.0f, 8.0f, 40.0f));
 	App->camera->LookAt(vec3(0, 0, 60));
 
