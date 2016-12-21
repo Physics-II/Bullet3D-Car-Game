@@ -26,6 +26,8 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(8.0f, 8.0f, 40.0f));
 	App->camera->LookAt(vec3(0, 0, 60));
 
+	// labyrinth walls
+
 	wall1 = new Cube(70, 10, 10);
 	wall1->SetPos(40, 5, -100);
 	wall1->color = Pink;

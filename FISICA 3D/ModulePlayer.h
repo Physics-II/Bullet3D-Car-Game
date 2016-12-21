@@ -28,6 +28,8 @@ public:
 
 	mat4x4 transf;
 
+	float time;
+
 	uint lives = 5;
 	uint score = 0;
 	uint max_score = 0;

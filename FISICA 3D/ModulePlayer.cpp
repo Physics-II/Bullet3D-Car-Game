@@ -164,9 +164,10 @@ update_status ModulePlayer::Update(float dt)
 		vehicle->Brake(brake);
 
 		vehicle->Render();
-		float time = (float)App->scene_intro->pTime.Read() / 1000;
-		char title[200];
 
+		time = (float)App->scene_intro->pTime.Read() / 1000;
+
+		char title[200];
 		sprintf_s(title, "Press all the buttons and get out of the labyrinth!, Lives (press 'N' to reset): %u, Score: %u, Max Score: %u, Time: %.2f", lives, score, max_score, time);
 		App->window->SetTitle(title);
 	}
@@ -174,9 +175,10 @@ update_status ModulePlayer::Update(float dt)
 	if (lives == 0)
 	{
 		max_score = score;
+		App->scene_intro->pTime.Stop();
 		
 		char title[200];
-		sprintf_s(title, "GAME OVER. Press 'ENTER' to play again. Score: %u, Max Score: %u", score, max_score);
+		sprintf_s(title, "GAME OVER. Press 'ENTER' to play again. Score: %u, Max Score: %u, Time elapsed: %.2f", score, max_score, App->scene_intro->pTime.Read());
 		App->window->SetTitle(title);
 		App->audio->PlayFx(App->scene_intro->lose);
 
@@ -194,9 +196,10 @@ update_status ModulePlayer::Update(float dt)
 		}
 
 		max_score += score;
+		App->scene_intro->pTime.Stop();
 
 		char title[200];
-		sprintf_s(title, "WINNER!!! Press 'ENTER' to play again. Score %u, Max Score: %u", score, max_score);
+		sprintf_s(title, "WINNER!!! Press 'ENTER' to play again. Score %u, Max Score: %u, Time elapsed: %.2f", score, max_score, App->scene_intro->pTime.Read());
 
 		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
@@ -226,4 +229,7 @@ void ModulePlayer::Restart()
 	App->scene_intro->b3->color = Green;
 	App->scene_intro->b4->color = Green;
 	App->scene_intro->end->color = Green;
+
+	// needs to reset timer!
+	App->scene_intro->pTime.Start();
 }
