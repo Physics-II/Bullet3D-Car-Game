@@ -246,7 +246,7 @@ bool ModuleSceneIntro::Start()
 
 	// buttons and sensors
 	
-	b1 = new Cube(10, 0, 10);
+	b1 = new Cube(10, 0.1f, 10);
 	b1->SetPos(0, 0, -90);
 	b1->color = Green;
 	b1b = App->physics->AddBody(*b1, 0);
@@ -257,7 +257,7 @@ bool ModuleSceneIntro::Start()
 	sensor->SetAsSensor(true);
 	sensor->collision_listeners.add(this);
 
-	b2 = new Cube(10, 0, 10);
+	b2 = new Cube(10, 0.1f, 10);
 	b2->SetPos(0, 0, 90);
 	b2->color = Green;
 	b2b = App->physics->AddBody(*b2, 0);
@@ -268,7 +268,7 @@ bool ModuleSceneIntro::Start()
 	sensor2->SetAsSensor(true);
 	sensor2->collision_listeners.add(this);
 
-	b3 = new Cube(10, 0, 10);
+	b3 = new Cube(10, 0.1f, 10);
 	b3->SetPos(0, 0, -70);
 	b3->color = Green;
 	b3b = App->physics->AddBody(*b3, 0);
@@ -279,7 +279,7 @@ bool ModuleSceneIntro::Start()
 	sensor3->SetAsSensor(true);
 	sensor3->collision_listeners.add(this);
 
-	b4 = new Cube(10, 0, 10);
+	b4 = new Cube(10, 0.1f, 10);
 	b4->SetPos(40, 0, 130);
 	b4->color = Green;
 	b4b = App->physics->AddBody(*b4, 0);
@@ -292,7 +292,7 @@ bool ModuleSceneIntro::Start()
 
 	//last sensor, needs to be pressed to open the gate
 
-	end = new Cube(10, 0, 10);
+	end = new Cube(10, 0.1f, 10);
 	end->SetPos(0, 0, 160);
 	end->color = Green;
 	endb = App->physics->AddBody(*end, 0);
@@ -324,9 +324,9 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	Plane p(1000, 1000, 0, 0);
+	Cube p(1000, 0, 10000);
 	//p.axis = true;
-	p.color = Color(0.0f, 0.5f, 1.0f);
+	p.color = Black;
 	p.Render();
 
 	wall1->Render();
@@ -385,54 +385,62 @@ update_status ModuleSceneIntro::Update(float dt)
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
 
-	if (body1 == sensor || body2 == sensor)
+	if (body1 == (PhysBody3D*)App->player->vehicle || body2 == (PhysBody3D*)App->player->vehicle)
 	{
-		if (b1pressed == false)
+		if (body1 == sensor || body2 == sensor)
 		{
-			b1pressed = true;
-			App->player->score += 100;
-			b1->color = Red;
+			if (b1pressed == false)
+			{
+				b1pressed = true;
+				App->player->score += 100;
+				b1->color = Red;
+				LOG("Hit 1!");
+			}
 		}
-	}
 
-	if (body1 == sensor2 || body2 == sensor2)
-	{
-		if (b2pressed == false)
+		if (body1 == sensor2 || body2 == sensor2)
 		{
-			b2pressed = true;
-			App->player->score += 200;
-			b2->color = Red;
+			if (b2pressed == false)
+			{
+				b2pressed = true;
+				App->player->score += 200;
+				b2->color = Red;
+				LOG("Hit 2!");
+			}
 		}
-	}
 
-	if (body1 == sensor3 || body2 == sensor3)
-	{
-		if (b3pressed == false)
+		if (body1 == sensor3 || body2 == sensor3)
 		{
-			b3pressed = true;
-			App->player->score += 100;
-			b3->color = Red;
+			if (b3pressed == false)
+			{
+				b3pressed = true;
+				App->player->score += 100;
+				b3->color = Red;
+				LOG("Hit 3!");
+			}
 		}
-	}
 
-	if (body1 == sensor4 || body2 == sensor4)
-	{
-		if (b4pressed == false)
+		if (body1 == sensor4 || body2 == sensor4)
 		{
-			b4pressed = true;
-			App->player->score += 300;
-			b4->color = Red;
+			if (b4pressed == false)
+			{
+				b4pressed = true;
+				App->player->score += 300;
+				b4->color = Red;
+				LOG("Hit 4!")
+			}
 		}
-	}
 
-	if (body1 == sensor5 || body2 == sensor5)
-	{
-		if (endpressed == false)
+		if (body1 == sensor5 || body2 == sensor5)
 		{
-			endpressed = true;
-			win_condit = true;
-			App->player->score += 500;
-			b4->color = Red;
+			if (endpressed == false)
+			{
+				endpressed = true;
+				win_condit = true;
+				App->player->score += 500;
+				end->color = Red;
+				LOG("Hit End!")
+			}
 		}
 	}
 }
