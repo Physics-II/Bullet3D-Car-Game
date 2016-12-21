@@ -3,6 +3,7 @@
 #include "ModuleSceneIntro.h"
 #include "Primitive.h"
 #include "PhysBody3D.h"
+#include "Timer.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -312,6 +313,7 @@ bool ModuleSceneIntro::Start()
 	b4pressed = false;
 	endpressed = false;
 	win_condit = false;
+	pTime.Start();
 
 	return ret;
 }
@@ -327,6 +329,8 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
+	
+
 	Cube p(1000, 0, 10000);
 	//p.axis = true;
 	p.color = Black;
