@@ -116,66 +116,76 @@ update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
 
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	if (lives > 0)
 	{
-		acceleration = MAX_ACCELERATION;
+		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+		{
+			acceleration = MAX_ACCELERATION;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+		{
+			if (turn > -TURN_DEGREES)
+				turn -= TURN_DEGREES;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+		{
+			if (turn < TURN_DEGREES)
+				turn += TURN_DEGREES;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+		{
+			acceleration = -(MAX_ACCELERATION);
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+		{
+			brake = BRAKE_POWER;
+		}
+
+
+		if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
+		{
+			if (lives > 0)
+			{
+				--lives;
+				vehicle->SetPos(0, 0, -100);
+				vehicle->Brake(BRAKE_POWER);
+			}
+		}
+
+		vehicle->ApplyEngineForce(-(acceleration));
+		vehicle->Turn(-(turn));
+		vehicle->Brake(brake);
+
+		vehicle->Render();
+
+		char title[200];
+		sprintf_s(title, "Press all the buttons and get out of the labyrinth! Speed: %fKm/h, Lives (press 'N' to reset): %u, Score: %u, Max Score: %u", vehicle->GetKmh(), lives, score, max_score);
+		App->window->SetTitle(title);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	if (lives == 0)
 	{
-		if (turn > -TURN_DEGREES)
-			turn -= TURN_DEGREES;
+		char title[200];
+		sprintf_s(title, "GAME OVER. Press 'ENTER' to play again. Score: %u, Max Score: %u", score, max_score);
+		App->window->SetTitle(title);
+		App->audio->PlayFx(App->scene_intro->lose);
+
+		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+		{
+			Restart();
+		}
 	}
-
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-	{
-		if (turn < TURN_DEGREES)
-			turn += TURN_DEGREES;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-	{
-		acceleration = -(MAX_ACCELERATION);
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
-	{
-		brake = BRAKE_POWER;
-	}
-
-
-	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
-	{
-		Restart();
-	}
-
-	vehicle->ApplyEngineForce(-(acceleration));
-	vehicle->Turn(-(turn));
-	vehicle->Brake(brake);
-
-	vehicle->Render();
-
-	/*char title[80];
-	sprintf_s(title, "%.1f Km/h", vehicle->GetKmh());
-	App->window->SetTitle(title);*/
 
 	return UPDATE_CONTINUE;
 }
 
 void ModulePlayer::Restart()
 {
-	--lives;
-	if (lives > 0)
-	{
-		App->player->vehicle->Brake(BRAKE_POWER);
-		App->player->vehicle->SetPos(0, 0, -100);
-	}
-
-	else
-	{
-		char title[80];
-		sprintf_s(title, "GAME OVER. Score: %u, Max Score: %u", App->player->score, App->player->max_score);
-		App->window->SetTitle(title);
-		App->audio->PlayFx(App->scene_intro->lose);
-	}
+	lives = 5;
+	score = 0;
+	vehicle->SetPos(0, 0, -100);
 }

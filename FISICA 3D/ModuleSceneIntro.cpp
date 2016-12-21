@@ -199,22 +199,34 @@ bool ModuleSceneIntro::Start()
 	i_wall40->SetPos(30, 5, 120);
 	i_wall40b = App->physics->AddBody(*i_wall40, 0);
 
+	//40, 0, 130
+	
 	b1 = new Cube(10, 0, 10);
 	b1->SetPos(0, 0, -90);
 	b1->color = Green;
 	b1b = App->physics->AddBody(*b1, 0);
 
 	s = new Cube(10, 10, 10);
-	s->SetPos(40, 0, 130);
+	s->SetPos(0, 0, -90);
 	sensor = App->physics->AddBody(*s, 0.0f);
 	sensor->SetAsSensor(true);
 	sensor->collision_listeners.add(this);
 
+	b2 = new Cube(10, 0, 10);
+	b2->SetPos(0, 0, 90);
+	b2->color = Green;
+	b2b = App->physics->AddBody(*b2, 0);
+
 	s2 = new Cube(10, 10, 10);
-	s2->SetPos(0, 0, 90);
+	s2->SetPos(0, 5, 90);
 	sensor2 = App->physics->AddBody(*s2, 0.0f);
 	sensor2->SetAsSensor(true);
 	sensor2->collision_listeners.add(this);
+
+	b3 = new Cube(10, 0, 10);
+	b3->SetPos(0, 0, -70);
+	b3->color = Green;
+	b3b = App->physics->AddBody(*b3, 0);
 
 	s3 = new Cube(10, 10, 10);
 	s3->SetPos(0, 0, -70);
@@ -222,10 +234,10 @@ bool ModuleSceneIntro::Start()
 	sensor3->SetAsSensor(true);
 	sensor3->collision_listeners.add(this);
 
-	sen1 = false;
-	sen2 = false;
-	sen3 = false;
-	win = false;
+	b1pressed = false;
+	b2pressed = false;
+	b3pressed = false;
+	win_condit = false;
 
 	return ret;
 }
@@ -293,12 +305,43 @@ update_status ModuleSceneIntro::Update(float dt)
 	i_wall40->Render();
 
 	b1->Render();
+	b2->Render();
+	b3->Render();
 
 	return UPDATE_CONTINUE;
 }
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	LOG("Hit!");
+
+	if (body1 == sensor || body2 == sensor)
+	{
+		if (b1pressed == false)
+		{
+			b1pressed = true;
+			App->player->score += 100;
+			b1->color = Red;
+		}
+	}
+
+	if (body1 == sensor2 || body2 == sensor2)
+	{
+		if (b2pressed == false)
+		{
+			b2pressed = true;
+			App->player->score += 100;
+			b2->color = Red;
+		}
+	}
+
+	if (body1 == sensor3 || body2 == sensor3)
+	{
+		if (b3pressed == false)
+		{
+			b3pressed = true;
+			App->player->score += 100;
+			b3->color = Red;
+		}
+	}
 }
 

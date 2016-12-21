@@ -34,10 +34,10 @@ public:
 	PhysBody3D *i_wall22b, *i_wall23b, *i_wall24b, *i_wall25b, *i_wall26b, *i_wall27b, *i_wall28b, *i_wall29b, *i_wall30b, *i_wall31b, *i_wall32b, *i_wall33b, *i_wall34b, *i_wall35b, *i_wall36b, *i_wall37b, *i_wall38b, *i_wall39b, *i_wall40b;
 
 	// Buttons
-	Cube *b1;
-	PhysBody3D *b1b;
+	Cube *b1, *b2, *b3;
+	PhysBody3D *b1b, *b2b, *b3b;
 
-	bool first;
+	bool b1pressed, b2pressed, b3pressed, win_condit;
 
 	//Sensors
 	Cube *s, *s2,*s3;
@@ -45,7 +45,4 @@ public:
 
 	// FX and music
 	uint lose;
-
-	//conditions
-	bool sen1, sen2, sen3, win;
 };

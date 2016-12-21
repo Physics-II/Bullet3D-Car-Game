@@ -28,5 +28,8 @@ public:
 
 	uint lives = 5;
 	uint score = 0;
+	uint resets = 5;
 	uint max_score = 0;
+
+	bool restart = false;
 };
