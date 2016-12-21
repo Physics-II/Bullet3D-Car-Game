@@ -100,6 +100,8 @@ bool ModulePlayer::Start()
 	vehicle->SetPos(0, 0, -100);
 	App->camera->Follow(vehicle, 5, 15, 1.f);
 
+	vehicle->GetTransform(&transf);
+
 	return true;
 }
 
@@ -153,6 +155,7 @@ update_status ModulePlayer::Update(float dt)
 				--lives;
 				vehicle->SetPos(0, 0, -100);
 				vehicle->Brake(BRAKE_POWER);
+				vehicle->SetTransform(&transf);
 			}
 		}
 
@@ -163,16 +166,36 @@ update_status ModulePlayer::Update(float dt)
 		vehicle->Render();
 
 		char title[200];
-		sprintf_s(title, "Press all the buttons and get out of the labyrinth! Speed: %fKm/h, Lives (press 'N' to reset): %u, Score: %u, Max Score: %u", vehicle->GetKmh(), lives, score, max_score);
+		sprintf_s(title, "Press all the buttons and get out of the labyrinth!, Lives (press 'N' to reset): %u, Score: %u, Max Score: %u", lives, score, max_score);
 		App->window->SetTitle(title);
 	}
 
 	if (lives == 0)
 	{
+		max_score = score;
+		
 		char title[200];
 		sprintf_s(title, "GAME OVER. Press 'ENTER' to play again. Score: %u, Max Score: %u", score, max_score);
 		App->window->SetTitle(title);
 		App->audio->PlayFx(App->scene_intro->lose);
+
+		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+		{
+			Restart();
+		}
+	}
+
+	if (App->scene_intro->win_condit)
+	{
+		if (lives > 1)
+		{
+			score += (lives * 100); //bonus if you finish with extra lives!
+		}
+
+		max_score += score;
+
+		char title[200];
+		sprintf_s(title, "WINNER!!! Press 'ENTER' to play again. Score %u, Max Score: %u", score, max_score);
 
 		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
@@ -188,4 +211,18 @@ void ModulePlayer::Restart()
 	lives = 5;
 	score = 0;
 	vehicle->SetPos(0, 0, -100);
+	vehicle->SetTransform(&transf);
+
+	App->scene_intro->b1pressed = false;
+	App->scene_intro->b2pressed = false;
+	App->scene_intro->b3pressed = false;
+	App->scene_intro->b4pressed = false;
+	App->scene_intro->endpressed = false;
+	App->scene_intro->win_condit = false;
+
+	App->scene_intro->b1->color = Green;
+	App->scene_intro->b2->color = Green;
+	App->scene_intro->b3->color = Green;
+	App->scene_intro->b4->color = Green;
+	App->scene_intro->end->color = Green;
 }

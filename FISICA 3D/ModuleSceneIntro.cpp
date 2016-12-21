@@ -438,6 +438,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 				endpressed = true;
 				win_condit = true;
 				App->player->score += 500;
+				App->player->max_score = App->player->score;
 				end->color = Red;
 				LOG("Hit End!")
 			}

@@ -26,10 +26,9 @@ public:
 	float acceleration;
 	float brake;
 
+	mat4x4 transf;
+
 	uint lives = 5;
 	uint score = 0;
-	uint resets = 5;
 	uint max_score = 0;
-
-	bool restart = false;
 };
