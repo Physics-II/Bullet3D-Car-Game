@@ -199,7 +199,8 @@ bool ModuleSceneIntro::Start()
 	i_wall40->SetPos(30, 5, 120);
 	i_wall40b = App->physics->AddBody(*i_wall40, 0);
 
-	//40, 0, 130
+
+	// buttons and sensors
 	
 	b1 = new Cube(10, 0, 10);
 	b1->SetPos(0, 0, -90);
@@ -234,9 +235,35 @@ bool ModuleSceneIntro::Start()
 	sensor3->SetAsSensor(true);
 	sensor3->collision_listeners.add(this);
 
+	b4 = new Cube(10, 0, 10);
+	b4->SetPos(40, 0, 130);
+	b4->color = Green;
+	b4b = App->physics->AddBody(*b4, 0);
+
+	s4 = new Cube(10, 10, 10);
+	s4->SetPos(40, 5, 130);
+	sensor3 = App->physics->AddBody(*s4, 0.0f);
+	sensor3->SetAsSensor(true);
+	sensor3->collision_listeners.add(this);
+
+	//last sensor, needs to be pressed to open the gate
+
+	end = new Cube(10, 0, 10);
+	end->SetPos(0, 0, 160);
+	end->color = Green;
+	endb = App->physics->AddBody(*end, 0);
+
+	s5 = new Cube(10, 10, 10);
+	s5->SetPos(0, 5, 160);
+	sensor5 = App->physics->AddBody(*s5, 0.0f);
+	sensor5->SetAsSensor(true);
+	sensor5->collision_listeners.add(this);
+
 	b1pressed = false;
 	b2pressed = false;
 	b3pressed = false;
+	b4pressed = false;
+	endpressed = false;
 	win_condit = false;
 
 	return ret;
@@ -254,7 +281,7 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update(float dt)
 {
 	Plane p(1000, 1000, 0, 0);
-	p.axis = true;
+	//p.axis = true;
 	p.color = Color(0.0f, 0.5f, 1.0f);
 	p.Render();
 
@@ -329,7 +356,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		if (b2pressed == false)
 		{
 			b2pressed = true;
-			App->player->score += 100;
+			App->player->score += 200;
 			b2->color = Red;
 		}
 	}
@@ -341,6 +368,27 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 			b3pressed = true;
 			App->player->score += 100;
 			b3->color = Red;
+		}
+	}
+
+	if (body1 == sensor4 || body2 == sensor4)
+	{
+		if (b4pressed == false)
+		{
+			b4pressed = true;
+			App->player->score += 300;
+			b4->color = Red;
+		}
+	}
+
+	if (body1 == sensor5 || body2 == sensor5)
+	{
+		if (endpressed == false)
+		{
+			endpressed = true;
+			win_condit = true;
+			App->player->score += 500;
+			b4->color = Red;
 		}
 	}
 }
