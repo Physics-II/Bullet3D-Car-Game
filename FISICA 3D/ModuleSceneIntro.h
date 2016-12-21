@@ -3,6 +3,7 @@
 #include "p2DynArray.h"
 #include "Globals.h"
 #include "Primitive.h"
+#include "Timer.h"
 
 #define MAX_SNAKE 2
 
@@ -45,4 +46,7 @@ public:
 
 	// FX and music
 	uint lose;
+	uint music;
+
+	Timer pTime;
 };

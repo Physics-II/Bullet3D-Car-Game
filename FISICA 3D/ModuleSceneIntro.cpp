@@ -3,6 +3,7 @@
 #include "ModuleSceneIntro.h"
 #include "Primitive.h"
 #include "PhysBody3D.h"
+#include "Timer.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -18,6 +19,9 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 
 	lose = App->audio->LoadFx("Game/Music/Lose.wav");
+
+	music = App->audio->LoadFx("Game/Music/Heavy.ogg");
+	App->audio->PlayMusic("Game/Music/Heavy.ogg");
 
 	App->camera->Move(vec3(8.0f, 8.0f, 40.0f));
 	App->camera->LookAt(vec3(0, 0, 60));
@@ -309,6 +313,7 @@ bool ModuleSceneIntro::Start()
 	b4pressed = false;
 	endpressed = false;
 	win_condit = false;
+	pTime.Start();
 
 	return ret;
 }
@@ -324,6 +329,8 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
+	
+
 	Cube p(1000, 0, 10000);
 	//p.axis = true;
 	p.color = Black;

@@ -164,9 +164,13 @@ update_status ModulePlayer::Update(float dt)
 		vehicle->Brake(brake);
 
 		vehicle->Render();
-
+		float time = (float)App->scene_intro->pTime.Read() / 1000;
 		char title[200];
+<<<<<<< HEAD
 		sprintf_s(title, "Press all the buttons and get out of the labyrinth!, Lives (press 'N' to reset): %u, Score: %u, Max Score: %u", lives, score, max_score);
+=======
+		sprintf_s(title, "Press all the buttons and get out of the labyrinth! Speed: %fKm/h, Lives (press 'N' to reset): %u, Score: %u, Max Score: %u Time: %.2f", vehicle->GetKmh(), lives, score, max_score,time);
+>>>>>>> origin/master
 		App->window->SetTitle(title);
 	}
 
