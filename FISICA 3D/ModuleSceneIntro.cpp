@@ -253,12 +253,12 @@ bool ModuleSceneIntro::Start()
 	// buttons and sensors
 	
 	b1 = new Cube(10, 0.1f, 10);
-	b1->SetPos(0, 0, -90);
+	b1->SetPos(0, 0, -70);
 	b1->color = Green;
 	b1b = App->physics->AddBody(*b1, 0);
 
 	s = new Cube(10, 10, 10);
-	s->SetPos(0, 0, -90);
+	s->SetPos(0, 0, -70);
 	sensor = App->physics->AddBody(*s, 0.0f);
 	sensor->SetAsSensor(true);
 	sensor->collision_listeners.add(this);
@@ -274,16 +274,7 @@ bool ModuleSceneIntro::Start()
 	sensor2->SetAsSensor(true);
 	sensor2->collision_listeners.add(this);
 
-	b3 = new Cube(10, 0.1f, 10);
-	b3->SetPos(0, 0, -70);
-	b3->color = Green;
-	b3b = App->physics->AddBody(*b3, 0);
-
-	s3 = new Cube(10, 10, 10);
-	s3->SetPos(0, 0, -70);
-	sensor3 = App->physics->AddBody(*s3, 0.0f);
-	sensor3->SetAsSensor(true);
-	sensor3->collision_listeners.add(this);
+	
 
 	b4 = new Cube(10, 0.1f, 10);
 	b4->SetPos(40, 0, 130);
@@ -386,7 +377,7 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	b1->Render();
 	b2->Render();
-	b3->Render();
+	
 
 	return UPDATE_CONTINUE;
 }
@@ -418,16 +409,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 			}
 		}
 
-		if (body1 == sensor3 || body2 == sensor3)
-		{
-			if (b3pressed == false)
-			{
-				b3pressed = true;
-				App->player->score += 100;
-				b3->color = Red;
-				LOG("Hit 3!");
-			}
-		}
+		
 
 		if (body1 == sensor4 || body2 == sensor4)
 		{
