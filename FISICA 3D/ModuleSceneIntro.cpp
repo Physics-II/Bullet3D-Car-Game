@@ -21,7 +21,7 @@ bool ModuleSceneIntro::Start()
 	lose = App->audio->LoadFx("Game/Music/Lose.wav");
 
 	music = App->audio->LoadFx("Game/Music/Heavy.ogg");
-	App->audio->PlayMusic("Game/Music/Heavy.ogg");
+	//App->audio->PlayMusic("Game/Music/Heavy.ogg");
 
 	App->camera->Move(vec3(8.0f, 8.0f, 40.0f));
 	App->camera->LookAt(vec3(0, 0, 60));
@@ -305,18 +305,16 @@ bool ModuleSceneIntro::Start()
 	win_condit = false;
 	pTime.Start();
 
-	pivot = new Cube(1, 1, 1);
-	pivot->SetPos(4,5,155);
-
-	pivotb = App->physics->AddBody(*pivot, 0);
 	//end / start doors
-	door = new Cube(6, 8, 1);
-	door->SetPos(0, 5, 155);
-	door->color = Blue;
+	door = new Cube(7, 8, 1);
+	door->SetPos(1, 5, 140);
 	doorb = App->physics->AddBody(*door, 1);
 
-	App->physics->AddConstraintHinge(*doorb, *pivotb, { 1, 4, 0 }, { 0,0,0 }, {0,0,1}, { 0,0, 1 });
-	
+	pivot = new Cube(1, 1, 1);
+	pivot->SetPos(4, 5, 140);
+	pivotb = App->physics->AddBody(*pivot, 0);
+
+	App->physics->AddConstraintHinge(*doorb, *pivotb, { 4.5, 0, 0 }, { 0, 0, 0 }, {0, 1, 0}, { 0,1, 0});
 	
 
 	return ret;
@@ -333,6 +331,9 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
+	mat4x4 m;
+	doorb->GetTransform(&m);
+	door->transform = m;
 	door->Render();
 
 	Cube p(1000, 0, 10000);
