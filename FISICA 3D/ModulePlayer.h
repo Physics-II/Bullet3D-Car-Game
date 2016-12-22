@@ -29,6 +29,7 @@ public:
 	mat4x4 transf;
 
 	float time;
+	float max_time;
 
 	uint lives = 5;
 	uint score = 0;

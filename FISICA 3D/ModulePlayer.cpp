@@ -102,6 +102,8 @@ bool ModulePlayer::Start()
 
 	vehicle->GetTransform(&transf);
 
+	App->scene_intro->pTime.Start();
+
 	return true;
 }
 
@@ -118,7 +120,7 @@ update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
 
-	if (lives > 0)
+	if (lives > 0 && (App->scene_intro->win_condit == false))
 	{
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		{
@@ -167,37 +169,24 @@ update_status ModulePlayer::Update(float dt)
 
 		time = (float)App->scene_intro->pTime.Read() / 1000;
 
-		char title[200];
-		sprintf_s(title, "Press all the buttons and get out of the labyrinth!, Lives (press 'N' to reset): %u, Score: %u, Max Score: %u, Time: %.2f", lives, score, max_score, time);
-		App->window->SetTitle(title);
-
-		if (App->scene_intro->win_condit)
+		if (App->scene_intro->win_condit == false)
 		{
-			if (lives > 1)
-			{
-				score += (lives * 100); //bonus if you finish with extra lives!
-			}
-
-			max_score += score;
-			App->scene_intro->pTime.Stop();
-
 			char title[200];
-			sprintf_s(title, "WINNER!!! Press 'ENTER' to play again. Score %u, Max Score: %u, Time elapsed: %.2f", score, max_score, App->scene_intro->pTime.Read());
-
-			if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-			{
-				Restart();
-			}
+			sprintf_s(title, "Press all the buttons and get out of the labyrinth!, Lives (press 'N' to reset): %u, Score: %u, Max Score: %u, Time: %.2f", lives, score, max_score, time);
+			App->window->SetTitle(title);
 		}
+
+
 	}
 
 	if (lives == 0)
 	{
-		max_score = score;
+		max_time = time;
 		App->scene_intro->pTime.Stop();
+		max_score = score;
 		
 		char title[200];
-		sprintf_s(title, "GAME OVER. Press 'ENTER' to play again. Score: %u, Max Score: %u, Time elapsed: %.2f", score, max_score, App->scene_intro->pTime.Read());
+		sprintf_s(title, "GAME OVER. Press 'ENTER' to play again. Score: %u, Max Score: %u, Time elapsed: %.2f", score, max_score, max_time);
 		App->window->SetTitle(title);
 		App->audio->PlayFx(App->scene_intro->lose);
 
@@ -207,13 +196,32 @@ update_status ModulePlayer::Update(float dt)
 		}
 	}
 
-	
+		if (App->scene_intro->win_condit)
+		{
+			max_time = time;
+			App->scene_intro->pTime.Stop();
+			max_score = score;
+
+			char title[200];
+			sprintf_s(title, "WINNER!!! Press 'ENTER' to play again. Score %u, Max Score: %u, Time elapsed: %.2f", score, max_score, max_time);
+			App->window->SetTitle(title);
+
+			if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+			{
+				Restart();
+			}
+		}
 
 	return UPDATE_CONTINUE;
 }
 
 void ModulePlayer::Restart()
 {
+	if (lives > 1)
+	{
+		score += (lives * 100); //bonus if you finish with extra lives!
+	}
+
 	lives = 5;
 	score = 0;
 	vehicle->SetPos(0, 0, -100);

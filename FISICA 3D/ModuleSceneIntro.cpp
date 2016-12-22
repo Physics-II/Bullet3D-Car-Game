@@ -248,6 +248,10 @@ bool ModuleSceneIntro::Start()
 	i_wall40->color = Pink;
 	i_wall40b = App->physics->AddBody(*i_wall40, 0);
 
+	i_wall41 = new Cube(20, 10, 0);
+	i_wall41->SetPos(0, 5, 167);
+	i_wall41b = App->physics->AddBody(*i_wall41, 0);
+
 
 	// buttons and sensors
 	
@@ -303,7 +307,6 @@ bool ModuleSceneIntro::Start()
 	b4pressed = false;
 	endpressed = false;
 	win_condit = false;
-	pTime.Start();
 
 	//end / start doors
 	door = new Cube(7, 8, 1);
@@ -315,6 +318,7 @@ bool ModuleSceneIntro::Start()
 	pivotb = App->physics->AddBody(*pivot, 0);
 
 	App->physics->AddConstraintHinge(*doorb, *pivotb, { 4.5, 0, 0 }, { 0, 0, 0 }, {0, 1, 0}, { 0,1, 0});
+	
 	
 
 	return ret;
@@ -335,6 +339,8 @@ update_status ModuleSceneIntro::Update(float dt)
 	doorb->GetTransform(&m);
 	door->transform = m;
 	door->Render();
+
+	doorb->body->applyForce({ 0,-100,0 }, { 0, 4, 0 });
 
 	Cube p(1000, 0, 10000);
 	//p.axis = true;
