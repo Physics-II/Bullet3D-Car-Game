@@ -44,6 +44,10 @@ public:
 	Cube *s, *s2,*s3, *s4, *s5;
 	PhysBody3D *sensor, *sensor2, *sensor3, *sensor4, *sensor5;
 
+	// end/start revolving doors
+	Cube *door;
+	PhysBody3D *doorb;
+
 	// FX and music
 	uint lose;
 	uint music;

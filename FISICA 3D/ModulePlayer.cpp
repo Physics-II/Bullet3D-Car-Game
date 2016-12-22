@@ -170,6 +170,25 @@ update_status ModulePlayer::Update(float dt)
 		char title[200];
 		sprintf_s(title, "Press all the buttons and get out of the labyrinth!, Lives (press 'N' to reset): %u, Score: %u, Max Score: %u, Time: %.2f", lives, score, max_score, time);
 		App->window->SetTitle(title);
+
+		if (App->scene_intro->win_condit)
+		{
+			if (lives > 1)
+			{
+				score += (lives * 100); //bonus if you finish with extra lives!
+			}
+
+			max_score += score;
+			App->scene_intro->pTime.Stop();
+
+			char title[200];
+			sprintf_s(title, "WINNER!!! Press 'ENTER' to play again. Score %u, Max Score: %u, Time elapsed: %.2f", score, max_score, App->scene_intro->pTime.Read());
+
+			if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+			{
+				Restart();
+			}
+		}
 	}
 
 	if (lives == 0)
@@ -188,24 +207,7 @@ update_status ModulePlayer::Update(float dt)
 		}
 	}
 
-	if (App->scene_intro->win_condit)
-	{
-		if (lives > 1)
-		{
-			score += (lives * 100); //bonus if you finish with extra lives!
-		}
-
-		max_score += score;
-		App->scene_intro->pTime.Stop();
-
-		char title[200];
-		sprintf_s(title, "WINNER!!! Press 'ENTER' to play again. Score %u, Max Score: %u, Time elapsed: %.2f", score, max_score, App->scene_intro->pTime.Read());
-
-		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-		{
-			Restart();
-		}
-	}
+	
 
 	return UPDATE_CONTINUE;
 }

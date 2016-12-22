@@ -308,6 +308,14 @@ bool ModuleSceneIntro::Start()
 	win_condit = false;
 	pTime.Start();
 
+	//end / start doors
+	door = new Cube(2, 10, 8);
+	door->SetPos(0, 5, 155);
+	door->color = Blue;
+	doorb = App->physics->AddBody(*door, 0);
+
+	App->physics->AddConstraintHinge(*doorb, *i_wall34b, { 0, 5, 0 }, { 10, 5, 10 }, {0, 1, 0}, { 0, 1, 0 });
+
 	return ret;
 }
 
