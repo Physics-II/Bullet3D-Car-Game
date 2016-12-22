@@ -254,7 +254,6 @@ bool ModuleSceneIntro::Start()
 
 	i_wall42 = new Cube(20, 10, 0);
 	i_wall42->SetPos(0, 0, -105);
-
 	i_wall42b = App->physics->AddBody(*i_wall42, 0);
 
 	// buttons and sensors
@@ -321,18 +320,18 @@ bool ModuleSceneIntro::Start()
 	pivot->SetPos(4, 5, 140);
 	pivotb = App->physics->AddBody(*pivot, 0);
 
-	App->physics->AddConstraintHinge(*doorb, *pivotb, { 4.5, 0, 0 }, { 0, 0, 0 }, {0, 1, 0}, { 0,1, 0});
+	App->physics->AddConstraintHinge(*doorb, *pivotb, { 4.5, 0, 0 }, { 0, 0, 0 }, {0, 1, 0}, { 0,1, 0}, true);
 	
 	//140
 	door2 = new Cube(7, 8, 1);
-	door2->SetPos(2, 5, 20);
+	door2->SetPos(1, 5, 20);
 	door2b = App->physics->AddBody(*door2, 1);
 
 	pivot2 = new Cube(1, 1, 1);
-	pivot2->SetPos(5, 5, 20);
+	pivot2->SetPos(4, 5, 20);
 	pivot2b = App->physics->AddBody(*pivot2, 0);
 
-	App->physics->AddConstraintHinge(*door2b, *pivot2b, { 4.5, 0, 0 }, { 0, 0, 0 }, { 0, 1, 0 }, { 0,1, 0 });
+	App->physics->AddConstraintHinge(*door2b, *pivot2b, { 4.5, 0, 0 }, { 0, 0, 0 }, { 0, 1, 0 }, { 0,1, 0 }, true);
 
 	return ret;
 }
@@ -360,7 +359,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	door2->transform = m2;
 	door2->Render();
 
-	door2b->body->applyForce({ 0,-100,0 }, { 0, 4, 0 });
+	door2b->body->applyForce({ 0,-100, 0 }, { 0, 4, 0 });
 
 	Cube p(1000, 0, 10000);
 	//p.axis = true;

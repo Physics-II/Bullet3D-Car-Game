@@ -119,6 +119,7 @@ bool ModulePlayer::CleanUp()
 update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
+	vehicle->Render();
 
 	if (lives > 0 && (App->scene_intro->win_condit == false))
 	{
@@ -165,8 +166,6 @@ update_status ModulePlayer::Update(float dt)
 		vehicle->Turn(-(turn));
 		vehicle->Brake(brake);
 
-		vehicle->Render();
-
 		time = (float)App->scene_intro->pTime.Read() / 1000;
 
 		if (App->scene_intro->win_condit == false)
@@ -211,6 +210,7 @@ update_status ModulePlayer::Update(float dt)
 				Restart();
 			}
 		}
+
 
 	return UPDATE_CONTINUE;
 }
