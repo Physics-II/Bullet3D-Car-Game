@@ -33,7 +33,6 @@ bool ModuleSceneIntro::Start()
 	wall1->color = Pink;
 	wall1b = App->physics->AddBody(*wall1, 0);
 
-
 	wall2 = new Cube(70, 10, 10);
 	wall2->SetPos(-40, 5, -100);
 	wall2->color = Pink;
@@ -274,8 +273,6 @@ bool ModuleSceneIntro::Start()
 	sensor2->SetAsSensor(true);
 	sensor2->collision_listeners.add(this);
 
-	
-
 	b4 = new Cube(10, 0.1f, 10);
 	b4->SetPos(40, 0, 130);
 	b4->color = Green;
@@ -283,9 +280,9 @@ bool ModuleSceneIntro::Start()
 
 	s4 = new Cube(10, 10, 10);
 	s4->SetPos(40, 5, 130);
-	sensor3 = App->physics->AddBody(*s4, 0.0f);
-	sensor3->SetAsSensor(true);
-	sensor3->collision_listeners.add(this);
+	sensor4 = App->physics->AddBody(*s4, 0.0f);
+	sensor4->SetAsSensor(true);
+	sensor4->collision_listeners.add(this);
 
 	//last sensor, needs to be pressed to open the gate
 
@@ -309,7 +306,7 @@ bool ModuleSceneIntro::Start()
 	pTime.Start();
 
 	//end / start doors
-	door = new Cube(2, 10, 8);
+	door = new Cube(8, 10, 1);
 	door->SetPos(0, 5, 155);
 	door->color = Blue;
 	doorb = App->physics->AddBody(*door, 0);
@@ -385,6 +382,8 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	b1->Render();
 	b2->Render();
+	b4->Render();
+	end->Render();
 	
 
 	return UPDATE_CONTINUE;
@@ -416,8 +415,6 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 				LOG("Hit 2!");
 			}
 		}
-
-		
 
 		if (body1 == sensor4 || body2 == sensor4)
 		{
