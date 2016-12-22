@@ -45,8 +45,8 @@ public:
 	PhysBody3D *sensor, *sensor2, *sensor4, *sensor5;
 
 	// end/start revolving doors
-	Cube *door;
-	PhysBody3D *doorb;
+	Cube *door, *pivot;
+	PhysBody3D *doorb, *pivotb;
 
 	// FX and music
 	uint lose;

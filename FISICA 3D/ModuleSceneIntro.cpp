@@ -305,13 +305,19 @@ bool ModuleSceneIntro::Start()
 	win_condit = false;
 	pTime.Start();
 
+	pivot = new Cube(1, 1, 1);
+	pivot->SetPos(4,5,155);
+
+	pivotb = App->physics->AddBody(*pivot, 0);
 	//end / start doors
-	door = new Cube(8, 10, 1);
+	door = new Cube(6, 8, 1);
 	door->SetPos(0, 5, 155);
 	door->color = Blue;
-	doorb = App->physics->AddBody(*door, 0);
+	doorb = App->physics->AddBody(*door, 1);
 
-	App->physics->AddConstraintHinge(*doorb, *i_wall34b, { 0, 5, 0 }, { 10, 5, 10 }, {0, 1, 0}, { 0, 1, 0 });
+	App->physics->AddConstraintHinge(*doorb, *pivotb, { 1, 4, 0 }, { 0,0,0 }, {0,0,1}, { 0,0, 1 });
+	
+	
 
 	return ret;
 }
@@ -327,7 +333,7 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	
+	door->Render();
 
 	Cube p(1000, 0, 10000);
 	//p.axis = true;

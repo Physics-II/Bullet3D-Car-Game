@@ -97,7 +97,7 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0, 0, -100);
+	vehicle->SetPos(0, 0, 150);
 	App->camera->Follow(vehicle, 5, 15, 1.f);
 
 	vehicle->GetTransform(&transf);
@@ -228,7 +228,7 @@ void ModulePlayer::Restart()
 
 	App->scene_intro->b1->color = Green;
 	App->scene_intro->b2->color = Green;
-	App->scene_intro->b3->color = Green;
+	
 	App->scene_intro->b4->color = Green;
 	App->scene_intro->end->color = Green;
 
